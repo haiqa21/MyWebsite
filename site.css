@@ -219,6 +219,9 @@ body.night .menu button {
     justify-content: center;
     z-index: 25;
     font-family: sans-serif;
+    max-width: 900px;
+    margin: 0 auto;
+
 }
 
 .tab {
@@ -249,15 +252,19 @@ body.night .tab {
     box-shadow: 0 10px 40px rgba(0,0,0,0.6);
 }
 
+
 .photo-container {
     display: flex;
+    justify-content: center;  
+    align-items: center;
     gap: 20px;
     flex-wrap: wrap;
-    margin-top: 15px;
+    width: 100%;
 }
 
 .photo-container img {
-    width: 250px;
+    max-width: 100%;   /* NEVER wider than container */
+    width: 300px;      /* preferred size */
     height: auto;
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
