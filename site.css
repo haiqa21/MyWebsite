@@ -248,3 +248,17 @@ body.night .tab {
     color: white;
     box-shadow: 0 10px 40px rgba(0,0,0,0.6);
 }
+
+.photo-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+
+.photo-container img {
+    width: 250px;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
