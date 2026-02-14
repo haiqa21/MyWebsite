@@ -35,10 +35,6 @@
         </div>
     </div>
 
-    <!-- MOON -->
-    <div class="moon"></div>
-
-
     <!-- MENU -->
     <div class="menu">
         <button onclick="showTab('about')">About Me</button>
@@ -87,7 +83,6 @@
         var offsetX = 0;
         var offsetY = 0;
         var sun = document.querySelector('.sun');
-        var moon = document.querySelector('.moon');
         var text = document.querySelector('.text');
         var body = document.body;
 
@@ -98,15 +93,12 @@
 
         function setDay() {
             body.className = 'day';
-            
+
             text.style.display = 'none';
             document.querySelector('.stars').style.display = 'none';
             document.querySelector('.stars1').style.display = 'none';
             document.querySelector('.stars2').style.display = 'none';
             document.querySelector('.shooting-stars').style.display = 'none';
-
-            moon.style.display = 'none';
-            sun.style.display = 'block';
 
             sun.style.left = daySunX + 'px';
             sun.style.top = daySunY + 'px';
@@ -122,10 +114,8 @@
             document.querySelector('.stars2').style.display = 'block';
             document.querySelector('.shooting-stars').style.display = 'block';
 
-            sun.style.display = 'none';
-            moon.style.display = 'block';
+            sun.style.opacity = 0;
         }
-
 
         text.onclick = function() {
             setDay();
@@ -137,34 +127,33 @@
             offsetY = e.clientY - sun.offsetTop;
         };
 
-        moon.onmousedown = function(e) {
-            isDragging = true;
-            offsetX = e.clientX - moon.offsetLeft;
-            offsetY = e.clientY - moon.offsetTop;
-        };
-
         document.onmousemove = function(e) {
             if (!isDragging) return;
 
-            // decide which object is active
-            var activeObj = body.className === 'day' ? sun : moon;
+            sun.style.left = (e.clientX - offsetX) + 'px';
+            sun.style.top = (e.clientY - offsetY) + 'px';
 
-            activeObj.style.left = (e.clientX - offsetX) + 'px';
-            activeObj.style.top = (e.clientY - offsetY) + 'px';
-
-            var rect = activeObj.getBoundingClientRect();
+            var rect = sun.getBoundingClientRect();
             var w = window.innerWidth;
             var h = window.innerHeight;
 
-            // dragged off screen
             if (rect.right < 0 || rect.left > w || rect.bottom < 0 || rect.top > h) {
-                if (body.className === 'day') {
-                    setNight();
-                } else {
-                    setDay();
-                }
+                setNight();
             }
         };
+
+        document.onmouseup = function() {
+            isDragging = false;
+        };
+
+        /* TAB SWITCHING */
+        function showTab(tabId) {
+            var tabs = document.querySelectorAll('.tab');
+            tabs.forEach(function(tab) {
+                tab.classList.remove('active');
+            });
+            document.getElementById(tabId).classList.add('active');
+        }
     </script>
 
 </body>
