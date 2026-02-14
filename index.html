@@ -35,6 +35,10 @@
         </div>
     </div>
 
+    <!-- MOON -->
+    <div class="moon"></div>
+
+
     <!-- MENU -->
     <div class="menu">
         <button onclick="showTab('about')">About Me</button>
@@ -53,7 +57,7 @@
             <p>This is one of the first times I've attempted to make something like this on my own, so I took making this website 
                 as a personal challenge to complete during my holidays! During making this, I experimented with being able to 
                 add interactivity through the sun + moon (try dragging it off to a corner) to connect to the theme day + night!! </p>
-            <p>I had laods of fun in making this and I would bring my enthusiasm and skills to this training program as well. 
+            <p>I had laods of fun making this and I would bring my enthusiasm and skills to this training program as well. 
                 Thank you for your consideration! </p>
         </div>
 
@@ -83,6 +87,7 @@
         var offsetX = 0;
         var offsetY = 0;
         var sun = document.querySelector('.sun');
+        var moon = document.querySelector('.moon');
         var text = document.querySelector('.text');
         var body = document.body;
 
@@ -93,12 +98,15 @@
 
         function setDay() {
             body.className = 'day';
-
+            
             text.style.display = 'none';
             document.querySelector('.stars').style.display = 'none';
             document.querySelector('.stars1').style.display = 'none';
             document.querySelector('.stars2').style.display = 'none';
             document.querySelector('.shooting-stars').style.display = 'none';
+
+            moon.style.display = 'none';
+            sun.style.display = 'block';
 
             sun.style.left = daySunX + 'px';
             sun.style.top = daySunY + 'px';
@@ -114,8 +122,10 @@
             document.querySelector('.stars2').style.display = 'block';
             document.querySelector('.shooting-stars').style.display = 'block';
 
-            sun.style.opacity = 0;
+            sun.style.display = 'none';
+            moon.style.display = 'block';
         }
+
 
         text.onclick = function() {
             setDay();
@@ -127,33 +137,34 @@
             offsetY = e.clientY - sun.offsetTop;
         };
 
+        moon.onmousedown = function(e) {
+            isDragging = true;
+            offsetX = e.clientX - moon.offsetLeft;
+            offsetY = e.clientY - moon.offsetTop;
+        };
+
         document.onmousemove = function(e) {
             if (!isDragging) return;
 
-            sun.style.left = (e.clientX - offsetX) + 'px';
-            sun.style.top = (e.clientY - offsetY) + 'px';
+            // decide which object is active
+            var activeObj = body.className === 'day' ? sun : moon;
 
-            var rect = sun.getBoundingClientRect();
+            activeObj.style.left = (e.clientX - offsetX) + 'px';
+            activeObj.style.top = (e.clientY - offsetY) + 'px';
+
+            var rect = activeObj.getBoundingClientRect();
             var w = window.innerWidth;
             var h = window.innerHeight;
 
+            // dragged off screen
             if (rect.right < 0 || rect.left > w || rect.bottom < 0 || rect.top > h) {
-                setNight();
+                if (body.className === 'day') {
+                    setNight();
+                } else {
+                    setDay();
+                }
             }
         };
-
-        document.onmouseup = function() {
-            isDragging = false;
-        };
-
-        /* TAB SWITCHING */
-        function showTab(tabId) {
-            var tabs = document.querySelectorAll('.tab');
-            tabs.forEach(function(tab) {
-                tab.classList.remove('active');
-            });
-            document.getElementById(tabId).classList.add('active');
-        }
     </script>
 
 </body>
