@@ -172,21 +172,6 @@ body.night {
     to { transform: rotate(360deg); }
 }
 
-/* ==================== MOON ==================== */
-
-.moon {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    background: #f5f3ce;
-    border-radius: 50%;
-    top: 40px;
-    right: 40px;
-    box-shadow: -15px 0 0 5px #020107; /* crescent effect */
-    cursor: grab;
-    display: none; /* hidden by default */
-}
-
 /* ==================== BOTTOM MENU ==================== */
 
 .menu {
